@@ -12,9 +12,12 @@ spec:
     default: main
   - name: NPM_ARGS
     type: array
+  - name: SONAR_HOST_URL
+    type: string
   workspaces:
   - name: shared-data
   - name: git-credentials
+  - name: sonar-credentials
   tasks:
   - name: fetch-source
     taskRef:
@@ -38,4 +41,18 @@ spec:
     params:
       - name: ARGS
         value: "$(params.NPM_ARGS[*])"
-        
+  - name: sonar-scanner
+    when:
+      - input: "$(params.SONAR_HOST_URL)"
+        operator: notin
+        values: [""]
+    taskRef:
+      name: sonarqube-scanner
+    workspaces:
+      - name: source
+        workspace: shared-data
+      - name: sonar-credentials
+        workspace: sonar-credentials
+    params:
+      - name: SONAR_HOST_URL
+        value: "$(params.SONAR_HOST_URL)"

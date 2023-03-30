@@ -17,6 +17,9 @@ spec:
   - name: git-credentials
     secret:
       secretName: git-credentials
+  - name: sonar-credentials
+    secret:
+      secretName: sonar-credentials
   params:
   - name: GIT_REPO
     value: git@github.com:rat9615/simple-nodejs-app.git
@@ -24,3 +27,5 @@ spec:
     value: master
   - name: NPM_ARGS
     value: ["install"]
+  - name: SONAR_HOST_URL
+    value: ""
