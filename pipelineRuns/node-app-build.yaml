@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: node-app-build-
+spec:
+  pipelineRef:
+    name: node-build
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  - name: git-credentials
+    secret:
+      secretName: git-credentials
+  params:
+  - name: GIT_REPO
+    value: git@github.com:rat9615/simple-nodejs-app.git
+  - name: GIT_REVISION
+    value: master
