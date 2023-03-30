@@ -22,3 +22,5 @@ spec:
     value: git@github.com:rat9615/simple-nodejs-app.git
   - name: GIT_REVISION
     value: master
+  - name: NPM_ARGS
+    value: ["install"]

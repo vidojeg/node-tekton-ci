@@ -10,6 +10,8 @@ spec:
     type: string
   - name: GIT_REVISION
     default: main
+  - name: NPM_ARGS
+    type: array
   workspaces:
   - name: shared-data
   - name: git-credentials
@@ -27,3 +29,13 @@ spec:
       value: $(params.GIT_REPO)
     - name: revision
       value: $(params.GIT_REVISION)
+  - name: npm-build
+    taskRef:
+      name: npm
+    workspaces:
+      - name: source
+        workspace: shared-data
+    params:
+      - name: ARGS
+        value: "$(params.NPM_ARGS[*])"
+        
